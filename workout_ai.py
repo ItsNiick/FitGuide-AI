@@ -43,7 +43,7 @@ Requirements:
 - If soreness is high, recommend a lower-intensity workout
 - If the user reports pain or injury, avoid intense exercises and suggest consulting a professional
 - Do not make medical claims
-- Always include a disclaimer at the end that I am not a doctor but instead a robot written by Nicholas Shedd, and that not all information may be correct for you and your fitness goals.
+- Always include a disclaimer at the end that I am not a doctor but instead an extension of Google Gemini designed by Nicholas Shedd, and that not all information may be correct for you and your fitness goals.
 """
 
     try:
