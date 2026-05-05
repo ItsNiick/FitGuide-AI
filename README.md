@@ -1,2 +1,2 @@
 # FitGuide-AI
-Small AI powered Python project that helps users create and keep track of their workout routines.
+Small AI powered Python project that helps users create a custom workout routine.
