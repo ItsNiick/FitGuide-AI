@@ -46,9 +46,21 @@ Requirements:
 - Always include a disclaimer at the end that I am not a doctor but instead a robot written by Nicholas Shedd, and that not all information may be correct for you and your fitness goals.
 """
 
-    response = client.models.generate_content(
-        model="gemini-2.5-flash-lite",
-        contents=prompt
-    )
+    try:
+        response = client.models.generate_content(
+            model="gemini-2.5-flash-lite",
+            contents=prompt
+        )
+        return response.text
 
-    return response.text
+    except Exception as e:
+        return f"""
+Sorry, FitGuide AI could not generate a workout right now.
+
+This is likely because the Gemini model is temporarily busy or unavailable.
+
+Error details:
+{e}
+
+Please try generating the workout again in a few moments.
+"""
