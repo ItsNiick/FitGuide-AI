@@ -15,7 +15,7 @@ st.write("Answer a few questions to get a personalized workout routine.")
 with st.form("workout_form"):
     goal = st.selectbox(
         "What is your main fitness goal?",
-        ["Streangth", "Muscle Gain", "Weight Loss", "Endurance", "Flexibility", "General Fitness"]
+        ["Strength", "Muscle Gain", "Weight Loss", "Endurance", "Flexibility", "General Fitness"]
     )
 
     experience = st.selectbox(
