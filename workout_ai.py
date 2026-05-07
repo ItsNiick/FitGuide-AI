@@ -1,4 +1,5 @@
 import os
+import json
 from dotenv import load_dotenv
 from google import genai
 import streamlit as st
@@ -32,35 +33,57 @@ Soreness/fatigue: {user_profile["soreness"]}
 Limitations/injuries: {user_profile["limitations"]}
 Workout preference: {user_profile["preference"]}
 
-Requirements:
-- Include a warm-up
-- Include 4-6 main exercises
-- Include sets, reps, or time
-- Include rest periods
-- Include a cooldown
-- Explain why this workout fits the user
-- Keep the routine realistic for the available time
-- If soreness is high, recommend a lower-intensity workout
+Return ONLY valid JSON in this exact structure:
+
+{{
+  "title": "Workout title",
+  "warmup": [
+    "Warm-up task 1",
+    "Warm-up task 2",
+    "Warm-up task 3"
+  ],
+  "exercises": [
+    {{
+      "name": "Exercise name",
+      "sets": "Number of sets",
+      "reps": "Reps or time",
+      "rest": "Rest period"
+    }}
+  ],
+  "cooldown": [
+    "Cooldown task 1",
+    "Cooldown task 2",
+    "Cooldown task 3"
+  ],
+  "explanation": "Brief explanation of why this workout fits the user.",
+  "disclaimer": "Short safety disclaimer."
+}}
+
+Rules:
+- Include 3 warm-up tasks
+- Include 4-6 exercises
+- Include 3 cooldown tasks
+- Keep the routine realistic for the user's available time
+- If soreness is high, make it lower intensity
 - If the user reports pain or injury, avoid intense exercises and suggest consulting a professional
-- Do not make medical claims
+- Do not include markdown
+- Do not include text outside the JSON
 - Always include a disclaimer at the end that I am not a doctor but instead an extension of Google Gemini designed by Nicholas Shedd, and that not all information may be correct for you and your fitness goals.
 """
 
+    response = client.models.generate_content(
+        model="gemini-2.5-flash-lite",
+        contents=prompt
+    )
+
     try:
-        response = client.models.generate_content(
-            model="gemini-2.5-flash-lite",
-            contents=prompt
-        )
-        return response.text
-
-    except Exception as e:
-        return f"""
-Sorry, FitGuide AI could not generate a workout right now.
-
-This is likely because the Gemini model is temporarily busy or unavailable.
-
-Error details:
-{e}
-
-Please try generating the workout again in a few moments.
-"""
+        return json.loads(response.text)
+    except json.JSONDecodeError:
+        return {
+            "title": "Workout Generated",
+            "warmup": [],
+            "exercises": [],
+            "cooldown": [],
+            "explanation": response.text,
+            "disclaimer": "This is general fitness guidance, not medical advice."
+        }
