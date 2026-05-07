@@ -1,3 +1,4 @@
 streamlit
+PIL
 google-genai
 python-dotenv
