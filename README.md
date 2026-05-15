@@ -3,7 +3,7 @@
 ## Files: 
 - streamlit_app.py: Main Streamlit web application and user interface.
 - workout_ai.py: Handles Gemini API connection and workout generation.
-- requirements.txt: Lists required Python packages (Mainly used for Streamlit Deployment)
+- requirements.txt: Lists required Python packages (Used during package installation)
 - images/: Stores icon for web application.
 
 ## Setup:
